@@ -22,7 +22,8 @@ class APIKeyMiddleware(BaseHTTPMiddleware):
             raise ValueError("API_KEY must be set as an environment variable")
 
     async def dispatch(self, request: Request, call_next):
-        if not request.url.path.startswith(PROTECTED_PREFIXES):
+        path = request.url.path.rstrip("/")
+        if path == "/api" or not path.startswith("/api/"):
             return await call_next(request)
 
         provided_key = request.headers.get("X-API-Key")

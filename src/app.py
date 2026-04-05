@@ -71,6 +71,16 @@ app.add_middleware(APIKeyMiddleware)
 
 
 # ------------------------------------------------------------------ #
+#  Health check
+# ------------------------------------------------------------------ #
+
+@app.get("/api")
+async def health_check():
+    """Health check endpoint. No authentication required."""
+    return {"status": "ok", "service": "Actor Graph API", "version": "1.0.0"}
+
+
+# ------------------------------------------------------------------ #
 #  Search
 # ------------------------------------------------------------------ #
 

@@ -1,6 +1,6 @@
 """
 API Key authentication middleware.
-Validates X-API-Key header on all requests except docs endpoints.
+Validates X-API-Key header on all protected routes.
 """
 
 import os
@@ -8,8 +8,8 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-# Paths that don't require authentication (Swagger UI, OpenAPI schema)
-EXEMPT_PATHS = {"/docs", "/openapi.json", "/redoc"}
+# Only paths starting with these prefixes require authentication
+PROTECTED_PREFIXES = ("/api/",)
 
 
 class APIKeyMiddleware(BaseHTTPMiddleware):
@@ -22,7 +22,7 @@ class APIKeyMiddleware(BaseHTTPMiddleware):
             raise ValueError("API_KEY must be set as an environment variable")
 
     async def dispatch(self, request: Request, call_next):
-        if request.url.path in EXEMPT_PATHS:
+        if not request.url.path.startswith(PROTECTED_PREFIXES):
             return await call_next(request)
 
         provided_key = request.headers.get("X-API-Key")

@@ -22,6 +22,10 @@ class APIKeyMiddleware(BaseHTTPMiddleware):
             raise ValueError("API_KEY must be set as an environment variable")
 
     async def dispatch(self, request: Request, call_next):
+        # Let preflight requests through so CORS middleware can handle them
+        if request.method == "OPTIONS":
+            return await call_next(request)
+
         path = request.url.path.rstrip("/")
         if path == "/api" or not path.startswith("/api/"):
             return await call_next(request)

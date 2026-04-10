@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends
 from fastapi.security import APIKeyHeader
 
 from .middleware.auth import APIKeyMiddleware
@@ -63,6 +64,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
     swagger_ui_parameters={"persistAuthorization": True},
+    dependencies=[Depends(api_key_scheme)],
 )
 
 # Middleware order matters: CORS runs first (handles preflight), then auth

@@ -122,7 +122,7 @@ class DataIngestionService:
         """
         # Single query: if the movie exists and has cast, return it directly
         movie_data = await self.neo4j.get_movie_with_cast(tmdb_id)
-        if movie_data and movie_data.get("cast"):
+        if movie_data and movie_data.get("cast_fully_fetched"):
             return movie_data
 
         logger.info(f"Movie {tmdb_id} needs full cast ingestion — fetching from TMDB")

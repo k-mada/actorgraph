@@ -303,6 +303,8 @@ class Neo4jService:
                 MERGE (a)-[r:ACTED_IN]->(m)
                 ON CREATE SET r.character = member.character, r.billing_order = member.billing_order
                 ON MATCH SET r.character = member.character, r.billing_order = member.billing_order
+                WITH DISTINCT m
+                SET m.cast_fully_fetched = true
                 """,
                 movie_id=movie_tmdb_id,
                 cast=cast,

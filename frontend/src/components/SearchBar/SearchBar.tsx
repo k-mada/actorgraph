@@ -63,7 +63,7 @@ export function SearchBar({
   const [debouncedQuery, setDebouncedQuery] = useState(initialValue);
   const [selected, setSelected] = useState(!!initialValue);
   const [open, setOpen] = useState(false);
-  const { results, loading, error } = useSearch(debouncedQuery);
+  const { results, loading } = useSearch(debouncedQuery);
   const timerRef = useRef<number | undefined>(undefined);
   // const { dispatch } = useAppState();
 

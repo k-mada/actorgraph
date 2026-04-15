@@ -15,18 +15,18 @@ const NODE_RADIUS = 16;
 const CHARGE_STRENGTH = -600;
 const ACCENT = "#6366f1";
 
-const NODE_COLORS = [
-  "#e05c5c", // red
-  "#e0905c", // orange
-  "#c8c84a", // yellow
-  "#4caf7d", // green
-  "#5c8fe0", // blue
-  "#9b5ce0", // purple
-];
+// const NODE_COLORS = [
+//   "#e05c5c", // red
+//   "#e0905c", // orange
+//   "#c8c84a", // yellow
+//   "#4caf7d", // green
+//   "#5c8fe0", // blue
+//   "#9b5ce0", // purple
+// ];
 
-function nodeColor(node: GraphNode): string {
-  return NODE_COLORS[node.id % NODE_COLORS.length];
-}
+// function nodeColor(node: GraphNode): string {
+//   return NODE_COLORS[node.id % NODE_COLORS.length];
+// }
 
 function nodeRadius(node: GraphNode) {
   return node.is_center ? CENTER_RADIUS : NODE_RADIUS;
@@ -75,7 +75,9 @@ export function GraphView() {
     if (!fg || !graph) return;
     // Distance varies inversely with shared-movie weight so heavily-connected
     // actors pull closer while weak connections stay further out.
-    fg.d3Force("link")?.distance((link: GraphLink) => 80 + 150 / Math.sqrt(link.weight || 1));
+    fg.d3Force("link")?.distance(
+      (link: GraphLink) => 80 + 150 / Math.sqrt(link.weight || 1),
+    );
     fg.d3Force("charge")?.strength(CHARGE_STRENGTH);
     // Collision: 3 iterations per tick resolves crowded layouts that a single
     // pass (the default) leaves unfinished within the cooldown budget.

@@ -9,3 +9,7 @@ Always batch database operations instead of looping over individual writes. I fa
 **Why:** Each `async with driver.session()` opens a new remote connection. Over a hosted Neo4j instance, this is extremely slow and caused HTTP request timeouts during actor ingestion. The fix was a single `UNWIND`-based Cypher query that completed in <1s.
 
 **How to apply:** When reviewing or writing code that interacts with any database, always flag loops that await individual DB calls. Proactively refactor into batch operations (e.g., `UNWIND` in Cypher, `executemany` in SQL, bulk writes in MongoDB). This is a critical performance pattern, not an optional optimization.
+
+### Tips for better code:
+
+- When writing code, review what you just wrote to ensure that any cruft is removed and that any code made obsolete by the update is removed.

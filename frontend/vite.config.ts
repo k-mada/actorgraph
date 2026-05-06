@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  cacheDir: "node_modules/.vite",
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {

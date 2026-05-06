@@ -68,8 +68,8 @@ app = FastAPI(
 )
 
 # Middleware order matters: CORS runs first (handles preflight), then auth
-add_cors_middleware(app)
 app.add_middleware(APIKeyMiddleware)
+add_cors_middleware(app)
 
 
 # ------------------------------------------------------------------ #
